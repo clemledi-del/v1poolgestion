@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -1756,7 +1757,7 @@
 
       <div class="onb-actions">
         <button class="btn btn-ghost" onclick="onbBack()">Retour</button>
-        <button class="btn" id="onbFinish" onclick="finishOnboarding(false)" disabled>Terminer
+        <button class="btn" id="onbFinish" onclick="finishOnboarding(false)">Terminer
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
         </button>
       </div>
@@ -2400,7 +2401,7 @@ function updateOnbValidation() {
     nextBtn.disabled = !ok;
   }
   const finishBtn = document.getElementById('onbFinish');
-  if (finishBtn) finishBtn.disabled = !onbData.location;
+  if (finishBtn) finishBtn.disabled = false;
 }
 
 // CITY SEARCH
@@ -2477,6 +2478,15 @@ function doCitySearch(query, resultsEl, onPick) {
 }
 
 function finishOnboarding(skipMeteo) {
+  if (onbStep === 1) onbData.name = document.getElementById('onbName').value.trim();
+  if (onbStep === 2 || !onbData.volume) {
+    if (onbData.volumeMode === 'm3') {
+      const v = parseFloat((document.getElementById('onbVolume').value || '').replace(',', '.'));
+      if (v && v >= 1) onbData.volume = v;
+    }
+  }
+  const typedCity = document.getElementById('onbCity') ? document.getElementById('onbCity').value.trim() : '';
+  if (!onbData.location && typedCity && !skipMeteo) onbData.location = { name: typedCity };
   if (!onbData.volume) { showToast('Le volume est nécessaire', true); setOnbStep(2); return; }
   if (!onbData.name) onbData.name = 'Ma piscine';
 
@@ -2981,7 +2991,7 @@ const routineDefs = {
     'Ajouter chlore lent si besoin'
   ]},
   monthly: { pill: 'Une fois par mois', items: [
-    'Tester l'alcalinité / TAC',
+    "Tester l'alcalinité / TAC",
     'Tester le stabilisant (CYA)',
     'Vérifier le TH / calcaire',
     'Nettoyage profond de la ligne d\'eau',
