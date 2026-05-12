@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -1574,61 +1573,6 @@
     background: rgba(233, 78, 78, 0.18);
     color: #ff7575;
   }
-
-  /* SHARED / ACTIONS / AI / PISCINIER */
-  .mini-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 6px 10px;
-    border-radius: 100px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid var(--line);
-    font-size: 11px;
-    color: var(--ink-dim);
-    margin-bottom: 12px;
-  }
-  .mini-status .led { width: 7px; height: 7px; border-radius: 50%; background: var(--warn); }
-  .mini-status.on .led { background: var(--leaf); box-shadow: 0 0 10px var(--leaf); }
-  .member-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-  .member-chip {
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    padding: 10px 12px; border-radius: 13px; background: rgba(0,0,0,0.22); border: 1px solid var(--line);
-    font-size: 13px;
-  }
-  .member-chip small { color: var(--ink-faint); font-family: var(--mono); }
-  .textarea {
-    min-height: 92px; resize: vertical; line-height: 1.45; font-family: var(--body);
-  }
-  .action-log-item {
-    padding: 13px 0; border-bottom: 1px solid var(--line);
-    display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: start;
-  }
-  .action-log-item:last-child { border-bottom: none; }
-  .action-log-icon { width: 34px; height: 34px; border-radius: 10px; background: rgba(78,192,216,0.12); color: var(--shallow); display:flex; align-items:center; justify-content:center; }
-  .action-log-title { font-size: 14px; font-weight: 500; }
-  .action-log-meta { font-size: 11px; color: var(--ink-faint); margin-top: 3px; font-family: var(--mono); }
-  .need-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
-  .need-tag { font-size: 11px; padding: 6px 9px; border-radius: 999px; background: rgba(245,217,126,0.12); color: var(--sun); border: 1px solid rgba(245,217,126,0.22); }
-  .photo-drop {
-    border: 1px dashed rgba(78,192,216,0.45); border-radius: 18px; padding: 20px;
-    background: rgba(78,192,216,0.06); text-align: center; cursor: pointer;
-  }
-  .photo-drop input { display: none; }
-  .photo-preview { width: 100%; max-height: 240px; object-fit: cover; border-radius: 16px; margin-top: 12px; display: none; border: 1px solid var(--line); }
-  .ia-disclaimer { font-size: 11px; color: var(--ink-faint); line-height: 1.45; margin-top: 10px; }
-  .store-card {
-    background: rgba(0,0,0,0.22); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-bottom: 10px;
-  }
-  .store-card .store-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .store-card .store-sub { font-size: 12px; color: var(--ink-dim); line-height: 1.45; }
-  .store-card a { color: var(--shallow); text-decoration: none; font-size: 12px; display:inline-block; margin-top: 10px; }
-  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .code-box {
-    background: rgba(0,0,0,0.35); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
-    color: var(--ink-dim); font-family: var(--mono); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere;
-  }
-
 </style>
 </head>
 <body>
@@ -1757,7 +1701,7 @@
 
       <div class="onb-actions">
         <button class="btn btn-ghost" onclick="onbBack()">Retour</button>
-        <button class="btn" id="onbFinish" onclick="finishOnboarding(false)">Terminer
+        <button class="btn" id="onbFinish" onclick="finishOnboarding(false)" disabled>Terminer
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
         </button>
       </div>
@@ -1807,9 +1751,9 @@
       </div>
       <div class="stat">
         <span class="stat-indicator" id="ind-tac"></span>
-        <div class="stat-label">Alcalinité</div>
-        <div class="stat-value" id="val-tac">—<span class="small">ppm</span></div>
-        <div class="stat-range">TAC cible 80 – 120 ppm</div>
+        <div class="stat-label">TAC</div>
+        <div class="stat-value" id="val-tac">—<span class="small">mg/L</span></div>
+        <div class="stat-range">cible 80 – 120</div>
       </div>
       <div class="stat">
         <span class="stat-indicator" id="ind-cya"></span>
@@ -1849,15 +1793,10 @@
         <div class="ttl">Rappels routine</div>
         <div class="sub">Ajouter au calendrier</div>
       </button>
-      <button class="action-btn" onclick="switchTab('ia')">
-        <div class="ico">✨</div>
-        <div class="ttl">Analyse IA</div>
-        <div class="sub">Photo de l'eau + conseils</div>
-      </button>
-      <button class="action-btn" onclick="switchTab('piscinier')">
-        <div class="ico">🛟</div>
-        <div class="ttl">Mon piscinier</div>
-        <div class="sub">Magasins selon besoins</div>
+      <button class="action-btn" onclick="sharePoolBySms()">
+        <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+        <div class="ttl">Partager</div>
+        <div class="sub">Envoyer par SMS</div>
       </button>
     </div>
   </div>
@@ -1876,8 +1815,8 @@
         <input class="input" type="number" step="0.1" id="in-cl" placeholder="ex. 1,5" inputmode="decimal">
       </div>
       <div class="field">
-        <div class="field-label"><span class="name">Alcalinité / TAC (ppm)</span><span class="target">80 – 120 · mensuel</span></div>
-        <input class="input" type="number" step="1" id="in-tac" placeholder="ex. 100" inputmode="decimal">
+        <div class="field-label"><span class="name">TAC (mg/L)</span><span class="target">80 – 120 · mensuel</span></div>
+        <input class="input" type="number" step="1" id="in-tac" placeholder="optionnel" inputmode="decimal">
       </div>
       <div class="field">
         <div class="field-label"><span class="name">Stabilisant CYA (mg/L)</span><span class="target">30 – 50 · mensuel</span></div>
@@ -2006,86 +1945,6 @@
     </div>
   </div>
 
-
-  <!-- ACTIONS BASSIN -->
-  <div class="view" id="view-actions">
-    <h2 class="section-title">Actions <em>bassin</em></h2>
-    <p class="section-sub">Journal partagé des actions réalisées : traitement, nettoyage, filtration, backwash, appoint d'eau...</p>
-    <div class="card">
-      <div class="field">
-        <div class="field-label"><span class="name">Type d'action</span><span class="target">journal</span></div>
-        <select class="input" id="actType">
-          <option value="Traitement">Traitement</option>
-          <option value="Nettoyage">Nettoyage</option>
-          <option value="Filtration">Filtration</option>
-          <option value="Backwash">Backwash filtre</option>
-          <option value="Analyse eau">Analyse eau</option>
-          <option value="Achat produit">Achat produit</option>
-          <option value="Autre">Autre</option>
-        </select>
-      </div>
-      <div class="field">
-        <div class="field-label"><span class="name">Action réalisée</span><span class="target">visible par les membres</span></div>
-        <textarea class="input textarea" id="actText" placeholder="ex. Chlore choc 220 g + filtration continue jusqu'à demain matin"></textarea>
-      </div>
-      <div class="input-row">
-        <div class="field">
-          <div class="field-label"><span class="name">Auteur</span></div>
-          <input class="input" id="actAuthor" placeholder="ex. Marin">
-        </div>
-        <div class="field">
-          <div class="field-label"><span class="name">Priorité</span></div>
-          <select class="input" id="actPriority">
-            <option value="info">Info</option>
-            <option value="important">Important</option>
-            <option value="urgent">Urgent</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn" onclick="savePoolAction()">Ajouter au journal partagé</button>
-    </div>
-    <div class="card">
-      <div class="card-title">Actions récentes</div>
-      <div class="card-sub" id="actionsCount">aucune action</div>
-      <div id="actionsList"></div>
-    </div>
-  </div>
-
-  <!-- ANALYSE IA -->
-  <div class="view" id="view-ia">
-    <h2 class="section-title">Analyse <em>IA</em></h2>
-    <p class="section-sub">Prends une photo de l'eau. Le prototype prépare un diagnostic visuel + croise avec les dernières mesures.</p>
-    <div class="card">
-      <label class="photo-drop" for="waterPhoto">
-        <div style="font-size:34px; margin-bottom:8px;">📷</div>
-        <div style="font-weight:500;">Ajouter une photo de l'eau</div>
-        <div style="font-size:12px; color:var(--ink-dim); margin-top:4px;">Vue du bassin, ligne d'eau ou fond</div>
-        <input type="file" id="waterPhoto" accept="image/*" capture="environment" onchange="previewWaterPhoto(event)">
-      </label>
-      <img id="waterPhotoPreview" class="photo-preview" alt="Photo de l'eau">
-      <div class="ia-disclaimer">Prototype : le vrai diagnostic IA fiable doit passer par une API Vision sécurisée côté serveur. Ici, l'app génère une analyse préparatoire à partir de la photo et des mesures déjà saisies.</div>
-      <button class="btn" onclick="runPhotoAIAnalysis()" style="margin-top:14px;">Lancer l'analyse IA</button>
-    </div>
-    <div id="iaResult" class="advice-wrap"></div>
-  </div>
-
-  <!-- MON PISCINIER -->
-  <div class="view" id="view-piscinier">
-    <h2 class="section-title">Mon <em>piscinier</em></h2>
-    <p class="section-sub">L'app détecte les besoins probables puis propose une recherche de magasins de fournitures piscine autour de toi.</p>
-    <div class="card">
-      <div class="card-title">Besoins détectés</div>
-      <div class="card-sub">Selon les dernières mesures et conseils</div>
-      <div id="poolNeeds"></div>
-      <button class="btn" onclick="renderPiscinier()" style="margin-top:14px;">Mettre à jour les besoins</button>
-    </div>
-    <div class="card">
-      <div class="card-title">Magasins à proximité</div>
-      <div class="card-sub">Recherche Google Maps adaptée</div>
-      <div id="storeSuggestions"></div>
-    </div>
-  </div>
-
   <!-- SETTINGS -->
   <div class="view" id="view-settings">
     <h2 class="section-title">Réglages</h2>
@@ -2119,81 +1978,29 @@
     </div>
 
     <div class="card">
+      <div class="card-title" style="margin-bottom: 6px;">Gestion partagée</div>
+      <div class="card-sub">Maison, famille, location : partage la même configuration par SMS</div>
+      <div class="tip" style="margin-bottom: 12px;">
+        <div class="tip-icon">🤝</div>
+        <div class="tip-text"><strong>Idéal pour une maison partagée :</strong> la personne reçoit un lien, ouvre l'app et récupère le bassin, l'historique et les routines.</div>
+      </div>
+      <button class="btn" onclick="sharePoolBySms()" style="margin-top: 6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Partager par SMS
+      </button>
+      <button class="btn btn-secondary" onclick="copyShareLink()" style="margin-top: 8px;">Copier le lien de partage</button>
+      <div style="font-size: 11px; color: var(--ink-faint); margin-top: 10px; line-height: 1.45;">
+        Note : ce partage synchronise une copie des données au moment de l'envoi. Pour une synchro temps réel entre plusieurs téléphones, il faudra ensuite ajouter une base de données en ligne.
+      </div>
+    </div>
+
+    <div class="card">
       <div class="card-title" style="margin-bottom: 14px;">Données</div>
       <div class="switch-row">
         <div class="lbl-grp">
           <div class="lbl">Mesures enregistrées</div>
           <div class="sub" id="settingsMeasureCount">0 entrée</div>
         </div>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <div class="card-title" style="margin-bottom: 6px;">Accès partagé temps réel</div>
-      <div class="card-sub">Mode pro : synchronisation via Supabase. Sans backend, le partage reste local ou par lien d'invitation.</div>
-      <div class="mini-status" id="syncStatus"><span class="led"></span><span>Synchronisation inactive</span></div>
-      <div class="field">
-        <div class="field-label"><span class="name">Nom du membre</span><span class="target">affiché dans le journal</span></div>
-        <input class="input" id="memberName" placeholder="ex. Marin">
-      </div>
-      <div class="input-row">
-        <div class="field">
-          <div class="field-label"><span class="name">ID piscine</span></div>
-          <input class="input" id="syncPoolId" placeholder="maison-pourrieres">
-        </div>
-        <div class="field">
-          <div class="field-label"><span class="name">Rôle</span></div>
-          <select class="input" id="memberRole"><option>Propriétaire</option><option>Membre</option><option>Piscinier</option></select>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-label"><span class="name">Supabase URL</span><span class="target">optionnel</span></div>
-        <input class="input" id="syncUrl" placeholder="https://xxxxx.supabase.co">
-      </div>
-      <div class="field">
-        <div class="field-label"><span class="name">Supabase anon key</span><span class="target">clé publique uniquement</span></div>
-        <input class="input" id="syncKey" placeholder="eyJ...">
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="saveSyncSettings()">Enregistrer</button>
-        <button class="btn" onclick="sharePoolInvite()">Inviter par SMS</button>
-      </div>
-      <div class="code-box" id="syncHelp" style="margin-top:12px;">Table attendue : pool_states(id text primary key, data jsonb, updated_at timestamptz). L'app pousse et lit l'état toutes les 5 secondes.</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title" style="margin-bottom: 6px;">Rappels notifications</div>
-      <div class="card-sub">Choisis la fréquence, le jour et l'heure. Les notifications navigateur fonctionnent surtout si l'app est installée ou ouverte récemment.</div>
-      <div class="settings-grid">
-        <div class="field">
-          <div class="field-label"><span class="name">Fréquence</span></div>
-          <select class="input" id="remFreq">
-            <option value="2days">Tous les 2 jours</option>
-            <option value="weekly">Hebdomadaire</option>
-            <option value="monthly">Mensuel</option>
-          </select>
-        </div>
-        <div class="field">
-          <div class="field-label"><span class="name">Jour</span></div>
-          <select class="input" id="remDay">
-            <option value="1">Lundi</option><option value="2">Mardi</option><option value="3">Mercredi</option><option value="4">Jeudi</option><option value="5">Vendredi</option><option value="6">Samedi</option><option value="0">Dimanche</option>
-          </select>
-        </div>
-      </div>
-      <div class="settings-grid">
-        <div class="field">
-          <div class="field-label"><span class="name">Heure</span></div>
-          <input class="input" type="time" id="remTime" value="09:00">
-        </div>
-        <div class="field">
-          <div class="field-label"><span class="name">Notification</span></div>
-          <select class="input" id="remEnabled"><option value="true">Activée</option><option value="false">Désactivée</option></select>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="saveReminderSettings()">Enregistrer</button>
-        <button class="btn" onclick="exportICS()">Exporter calendrier</button>
       </div>
     </div>
 
@@ -2223,14 +2030,6 @@
   <button data-tab="rout" onclick="switchTab('rout')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
     Routines
-  </button>
-  <button data-tab="actions" onclick="switchTab('actions')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-    Actions
-  </button>
-  <button data-tab="ia" onclick="switchTab('ia')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l1.8 5.5L19 9.3l-5.2 1.8L12 17l-1.8-5.9L5 9.3l5.2-1.8L12 2z"/><path d="M19 15l.9 2.7L22 18.6l-2.1.7L19 22l-.9-2.7-2.1-.7 2.1-.9L19 15z"/></svg>
-    IA
   </button>
   <button data-tab="aide" onclick="switchTab('aide')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -2270,6 +2069,21 @@
   </div>
 </div>
 
+<div class="modal-bg" id="shareImportModal">
+  <div class="modal">
+    <h3>Rejoindre cette piscine ?</h3>
+    <div class="sub" id="shareImportSub">Un partage de piscine a été détecté.</div>
+    <div class="tip" style="margin-bottom: 12px;">
+      <div class="tip-icon">🏡</div>
+      <div class="tip-text"><strong>Gestion partagée :</strong> cette action importe la configuration, l'historique et les routines sur ce téléphone.</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeShareImportModal()">Annuler</button>
+      <button class="btn" onclick="confirmSharedPoolImport()">Importer</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // STORAGE
 const KEYS = {
@@ -2279,11 +2093,7 @@ const KEYS = {
   lastTemp: 'piscine:lastTemp',
   notifEnabled: 'piscine:notifEnabled',
   meteoCache: 'piscine:meteoCache',
-  installDismissed: 'piscine:installDismissed',
-  actions: 'piscine:actions',
-  sync: 'piscine:sync',
-  reminders: 'piscine:reminders',
-  aiAnalyses: 'piscine:aiAnalyses'
+  installDismissed: 'piscine:installDismissed'
 };
 
 function loadKey(key, fallback) {
@@ -2311,11 +2121,7 @@ let state = {
   config: null,
   measures: [],
   routines: { daily: {}, weekly: {}, monthly: {} },
-  routinesReset: { daily: 0, weekly: 0, monthly: 0 },
-  actions: [],
-  aiAnalyses: [],
-  sync: null,
-  reminders: { enabled: false, frequency: '2days', day: 6, time: '09:00' }
+  routinesReset: { daily: 0, weekly: 0, monthly: 0 }
 };
 
 // ONBOARDING
@@ -2401,7 +2207,7 @@ function updateOnbValidation() {
     nextBtn.disabled = !ok;
   }
   const finishBtn = document.getElementById('onbFinish');
-  if (finishBtn) finishBtn.disabled = false;
+  if (finishBtn) finishBtn.disabled = !onbData.location;
 }
 
 // CITY SEARCH
@@ -2478,15 +2284,6 @@ function doCitySearch(query, resultsEl, onPick) {
 }
 
 function finishOnboarding(skipMeteo) {
-  if (onbStep === 1) onbData.name = document.getElementById('onbName').value.trim();
-  if (onbStep === 2 || !onbData.volume) {
-    if (onbData.volumeMode === 'm3') {
-      const v = parseFloat((document.getElementById('onbVolume').value || '').replace(',', '.'));
-      if (v && v >= 1) onbData.volume = v;
-    }
-  }
-  const typedCity = document.getElementById('onbCity') ? document.getElementById('onbCity').value.trim() : '';
-  if (!onbData.location && typedCity && !skipMeteo) onbData.location = { name: typedCity };
   if (!onbData.volume) { showToast('Le volume est nécessaire', true); setOnbStep(2); return; }
   if (!onbData.name) onbData.name = 'Ma piscine';
 
@@ -2520,7 +2317,6 @@ function initAppUI() {
   document.getElementById('setVolume').value = state.config.volume;
   document.getElementById('setCurrentCity').textContent = state.config.location ? state.config.location.name : 'aucune';
   document.getElementById('settingsMeasureCount').textContent = state.measures.length + (state.measures.length > 1 ? ' entrées' : ' entrée');
-  hydrateAdvancedSettings();
 
   const slider = document.getElementById('tempSlider');
   slider.addEventListener('input', (e) => {
@@ -2537,10 +2333,6 @@ function initAppUI() {
   renderHistory();
   renderRoutines();
   renderProblems();
-  renderActions();
-  renderPiscinier();
-  updateSyncStatus();
-  startRealtimeSync();
 
   const notifEnabled = loadKey(KEYS.notifEnabled, false);
   if (notifEnabled && 'Notification' in window && Notification.permission === 'granted') {
@@ -2629,7 +2421,7 @@ function renderDashboard() {
   if (!last) {
     document.getElementById('val-ph').textContent = '—';
     document.getElementById('val-cl').innerHTML = '—<span class="small">mg/L</span>';
-    document.getElementById('val-tac').innerHTML = '—<span class="small">ppm</span>';
+    document.getElementById('val-tac').innerHTML = '—<span class="small">mg/L</span>';
     document.getElementById('val-cya').innerHTML = '—<span class="small">mg/L</span>';
     setInd('ind-ph','neutral'); setInd('ind-cl','neutral'); setInd('ind-tac','neutral'); setInd('ind-cya','neutral');
     document.getElementById('overallStatus').textContent = '—';
@@ -2642,7 +2434,7 @@ function renderDashboard() {
 
   document.getElementById('val-ph').textContent = fmt(last.ph, 2);
   document.getElementById('val-cl').innerHTML = fmt(last.cl, 1) + '<span class="small">mg/L</span>';
-  document.getElementById('val-tac').innerHTML = fmt(last.tac, 0) + '<span class="small">ppm</span>';
+  document.getElementById('val-tac').innerHTML = fmt(last.tac, 0) + '<span class="small">mg/L</span>';
   document.getElementById('val-cya').innerHTML = fmt(last.cya, 0) + '<span class="small">mg/L</span>';
 
   const s = { ph: phStatus(last.ph), cl: clStatus(last.cl), tac: tacStatus(last.tac), cya: cyaStatus(last.cya) };
@@ -2701,8 +2493,6 @@ function saveMeasure() {
   renderHistory();
   renderDiagnostic(advice, true);
   document.getElementById('settingsMeasureCount').textContent = state.measures.length + (state.measures.length > 1 ? ' entrées' : ' entrée');
-  hydrateAdvancedSettings();
-  pushRealtimeState();
   showToast('Mesure enregistrée ✓');
 }
 
@@ -2738,7 +2528,7 @@ function renderHistory() {
     const vals = [];
     if (m.ph != null) vals.push('<span class="' + sCls(phStatus(m.ph)) + '"><span class="k">pH</span><span class="v">' + fmt(m.ph) + '</span></span>');
     if (m.cl != null) vals.push('<span class="' + sCls(clStatus(m.cl)) + '"><span class="k">Cl</span><span class="v">' + fmt(m.cl) + '</span></span>');
-    if (m.tac != null) vals.push('<span class="' + sCls(tacStatus(m.tac)) + '"><span class="k">ALK</span><span class="v">' + fmt(m.tac) + '</span></span>');
+    if (m.tac != null) vals.push('<span class="' + sCls(tacStatus(m.tac)) + '"><span class="k">TAC</span><span class="v">' + fmt(m.tac) + '</span></span>');
     if (m.cya != null) vals.push('<span class="' + sCls(cyaStatus(m.cya)) + '"><span class="k">CYA</span><span class="v">' + fmt(m.cya) + '</span></span>');
     if (m.th != null) vals.push('<span><span class="k">TH</span><span class="v">' + fmt(m.th) + '</span></span>');
     if (m.temp != null) vals.push('<span><span class="k">T°</span><span class="v">' + fmt(m.temp) + '°</span></span>');
@@ -2758,8 +2548,6 @@ function deleteMeasure(idx) {
   renderHistory();
   renderDashboard();
   document.getElementById('settingsMeasureCount').textContent = state.measures.length + (state.measures.length > 1 ? ' entrées' : ' entrée');
-  hydrateAdvancedSettings();
-  pushRealtimeState();
   showToast('Mesure supprimée');
 }
 
@@ -2797,7 +2585,7 @@ function buildDiagnostic(m) {
 
   if (m.cl != null && !isNaN(m.cl)) {
     if (m.cl >= 1 && m.cl <= 3) {
-      advice.push({ param: 'Chlore libre', status: 'good', value: m.cl.toFixed(1) + ' ppm', icon: '✓', title: 'Chlore au bon niveau', body: 'La désinfection se fait correctement. Continue à surveiller 2-3 fois/semaine en été.' });
+      advice.push({ param: 'Chlore libre', status: 'good', value: m.cl.toFixed(1) + ' mg/L', icon: '✓', title: 'Chlore au bon niveau', body: 'La désinfection se fait correctement. Continue à surveiller 2-3 fois/semaine en été.' });
     } else if (m.cl < 1) {
       const isZero = m.cl < 0.3;
       const actions = [];
@@ -2816,7 +2604,7 @@ function buildDiagnostic(m) {
       if (m.cya != null && m.cya < 20) causes.push('stabilisant insuffisant');
       if (m.temp != null && m.temp >= 28) causes.push('eau chaude');
 
-      advice.push({ param: 'Chlore libre', status: isZero ? 'bad' : 'warn', value: m.cl.toFixed(1) + ' ppm', icon: '↓', title: isZero ? 'Chlore quasiment nul' : 'Chlore trop bas', body: causes.length ? '<strong>Cause probable :</strong> ' + causes.join(', ') + '.' : 'Augmente le dosage avant que des algues n\'apparaissent.', actions });
+      advice.push({ param: 'Chlore libre', status: isZero ? 'bad' : 'warn', value: m.cl.toFixed(1) + ' mg/L', icon: '↓', title: isZero ? 'Chlore quasiment nul' : 'Chlore trop bas', body: causes.length ? '<strong>Cause probable :</strong> ' + causes.join(', ') + '.' : 'Augmente le dosage avant que des algues n\'apparaissent.', actions });
     } else {
       const actions = [
         { b: '→', t: '<strong>Retirer les galets</strong> du diffuseur pendant 24-48 h.' },
@@ -2824,23 +2612,23 @@ function buildDiagnostic(m) {
         { b: '→', t: '<strong>Pas de baignade</strong> tant que > 3 mg/L (irrite yeux/peau).' },
         { b: '→', t: 'Re-tester chaque jour.' }
       ];
-      advice.push({ param: 'Chlore libre', status: m.cl > 5 ? 'bad' : 'warn', value: m.cl.toFixed(1) + ' ppm', icon: '↑', title: 'Chlore trop élevé', body: 'Surdosage : irritant et inutile.', actions });
+      advice.push({ param: 'Chlore libre', status: m.cl > 5 ? 'bad' : 'warn', value: m.cl.toFixed(1) + ' mg/L', icon: '↑', title: 'Chlore trop élevé', body: 'Surdosage : irritant et inutile.', actions });
     }
   }
 
   if (m.tac != null && !isNaN(m.tac)) {
     if (m.tac >= 80 && m.tac <= 120) {
-      advice.push({ param: 'Alcalinité', status: 'good', value: Math.round(m.tac) + ' ppm', icon: '✓', title: 'Alcalinité idéale', body: 'Le pH va rester stable. Bonne base pour tout le reste.' });
+      advice.push({ param: 'TAC', status: 'good', value: Math.round(m.tac) + ' mg/L', icon: '✓', title: 'Alcalinité idéale', body: 'Le pH va rester stable. Bonne base pour tout le reste.' });
     } else if (m.tac < 80) {
       const grams = Math.round((100 - m.tac) * 1.7 * V);
-      advice.push({ param: 'Alcalinité', status: 'warn', value: Math.round(m.tac) + ' ppm', icon: '↓', title: 'Alcalinité trop basse', body: 'Sans tampon, le pH peut faire le yo-yo. À corriger en premier.', actions: [
+      advice.push({ param: 'TAC', status: 'warn', value: Math.round(m.tac) + ' mg/L', icon: '↓', title: 'Alcalinité trop basse', body: 'Sans tampon, le pH peut faire le yo-yo. À corriger en premier.', actions: [
         { b: '!', t: 'TAC bas → <strong>pH instable</strong>.' },
         { b: '→', t: 'Ajouter du <strong>TAC+ / alcalinité+</strong> : ~<code>' + grams + ' g</code> à diluer.' },
         { b: '→', t: 'Traiter le TAC <strong>avant</strong> le pH.' },
         { b: '→', t: 'Filtration 4-6 h, re-tester après 24 h.' }
       ]});
     } else {
-      advice.push({ param: 'Alcalinité', status: 'warn', value: Math.round(m.tac) + ' ppm', icon: '↑', title: 'Alcalinité trop élevée', body: 'Cela "bloque" le pH en haut.', actions: [
+      advice.push({ param: 'TAC', status: 'warn', value: Math.round(m.tac) + ' mg/L', icon: '↑', title: 'Alcalinité trop élevée', body: 'Cela "bloque" le pH en haut.', actions: [
         { b: '→', t: 'Baisser le pH à 7.0 avec du <strong>pH−</strong>, le TAC suit.' },
         { b: '→', t: 'Aérer (jets, fontaine) accélère la baisse.' },
         { b: '→', t: 'Re-tester TAC + pH <strong>après 48 h</strong>.' }
@@ -2850,16 +2638,16 @@ function buildDiagnostic(m) {
 
   if (m.cya != null && !isNaN(m.cya)) {
     if (m.cya >= 30 && m.cya <= 50) {
-      advice.push({ param: 'Stabilisant', status: 'good', value: Math.round(m.cya) + ' ppm', icon: '✓', title: 'Stabilisant idéal', body: 'Le chlore est protégé des UV juste ce qu\'il faut.' });
+      advice.push({ param: 'Stabilisant', status: 'good', value: Math.round(m.cya) + ' mg/L', icon: '✓', title: 'Stabilisant idéal', body: 'Le chlore est protégé des UV juste ce qu\'il faut.' });
     } else if (m.cya < 30) {
       const actions = [];
       if (m.cya < 20) actions.push({ b: '!', t: '<strong>Le chlore est détruit en quelques heures par le soleil.</strong>' });
       const grams = Math.round((40 - m.cya) * V);
       actions.push({ b: '→', t: 'Ajouter du <strong>stabilisant</strong> : ~<code>' + grams + ' g</code>. Verser dans le skimmer pompe en marche.' });
       actions.push({ b: '→', t: 'Se dissout <strong>lentement</strong> (jusqu\'à 1 semaine). Re-tester dans 7 jours.' });
-      advice.push({ param: 'Stabilisant', status: m.cya < 20 ? 'bad' : 'warn', value: Math.round(m.cya) + ' ppm', icon: '↓', title: 'Stabilisant insuffisant', body: 'Sans assez de stabilisant, le chlore ne tient pas face aux UV.', actions });
+      advice.push({ param: 'Stabilisant', status: m.cya < 20 ? 'bad' : 'warn', value: Math.round(m.cya) + ' mg/L', icon: '↓', title: 'Stabilisant insuffisant', body: 'Sans assez de stabilisant, le chlore ne tient pas face aux UV.', actions });
     } else if (m.cya <= 75) {
-      advice.push({ param: 'Stabilisant', status: 'warn', value: Math.round(m.cya) + ' ppm', icon: '↑', title: 'Stabilisant à la limite haute', body: 'Encore acceptable, mais surveille.', actions: [
+      advice.push({ param: 'Stabilisant', status: 'warn', value: Math.round(m.cya) + ' mg/L', icon: '↑', title: 'Stabilisant à la limite haute', body: 'Encore acceptable, mais surveille.', actions: [
         { b: '→', t: 'Limiter le <strong>chlore stabilisé</strong> (galets classiques).' },
         { b: '→', t: 'Pour le choc, prendre une version <strong>non stabilisée</strong> (hypochlorite de calcium).' }
       ]});
@@ -2867,7 +2655,7 @@ function buildDiagnostic(m) {
       const t = (m.cya - 40) / m.cya;
       const m3 = Math.round(t * V * 10) / 10;
       const litres = Math.round(t * V * 1000);
-      advice.push({ param: 'Stabilisant', status: 'bad', value: Math.round(m.cya) + ' ppm', icon: '!', title: 'Stabilisant saturé : action requise', body: 'Au-delà de 75 mg/L, le chlore est "bloqué". Vidange partielle obligatoire.', actions: [
+      advice.push({ param: 'Stabilisant', status: 'bad', value: Math.round(m.cya) + ' mg/L', icon: '!', title: 'Stabilisant saturé : action requise', body: 'Au-delà de 75 mg/L, le chlore est "bloqué". Vidange partielle obligatoire.', actions: [
         { b: '!', t: '<strong>Le chlore devient inefficace</strong> : risque d\'eau verte.' },
         { b: '→', t: '<strong>Vidange partielle</strong> : remplacer ~<code>' + m3 + ' m³</code> (' + litres + ' L) pour viser 40 mg/L.' },
         { b: '→', t: 'Vidanger via vanne <strong>"Égout / Waste"</strong>. Compléter pendant le pompage.' },
@@ -2892,8 +2680,8 @@ function buildDiagnostic(m) {
 
   if (m.temp != null && !isNaN(m.temp)) {
     if (m.temp >= 28) {
-      const hours = '24/24';
-      advice.push({ param: 'Température eau', status: 'warn', value: m.temp.toFixed(1) + '°C', icon: '☀', title: 'Eau chaude : filtration 24/24', body: 'Le chlore se consomme vite et les algues prolifèrent.', actions: [
+      const hours = m.temp >= 30 ? '18 h ou plus (24/24 en canicule)' : '14 h';
+      advice.push({ param: 'Température eau', status: 'warn', value: m.temp.toFixed(1) + '°C', icon: '☀', title: 'Eau chaude : filtration prolongée', body: 'Le chlore se consomme vite et les algues prolifèrent.', actions: [
         { b: '→', t: 'Filtration : <strong>' + hours + '</strong> par jour, en journée.' },
         { b: '→', t: 'Contrôler le chlore <strong>tous les jours</strong>.' },
         { b: '→', t: 'Vérifier le stabilisant : 40-50 mg/L pour tenir.' }
@@ -2961,15 +2749,15 @@ function updateFiltration() {
   document.getElementById('tempEcho').textContent = t.toLocaleString('fr-FR') + ' °C';
 
   let hours = Math.round(t / 2);
-  if (t >= 28) hours = 24;
-  hours = Math.max(4, Math.min(24, hours));
+  if (t >= 30) hours = Math.min(18, Math.max(15, hours));
+  hours = Math.max(4, Math.min(20, hours));
 
-  document.getElementById('filtHours').textContent = hours === 24 ? '24 h' : hours + ' h';
+  document.getElementById('filtHours').textContent = hours + ' h';
 
   const startH = Math.max(6, Math.round(12 - hours / 2));
   const endH = Math.min(24, startH + hours);
   const fmt = (h) => h === 24 ? '00h' : (h + 'h');
-  document.getElementById('filtSchedule').textContent = hours === 24 ? 'filtration 24/24 recommandée (> 28°C)' : 'idéal : ' + fmt(startH) + ' → ' + fmt(endH);
+  document.getElementById('filtSchedule').textContent = hours >= 18 ? 'quasi 24/24 en canicule' : 'idéal : ' + fmt(startH) + ' → ' + fmt(endH);
 }
 
 // ROUTINES
@@ -2991,7 +2779,7 @@ const routineDefs = {
     'Ajouter chlore lent si besoin'
   ]},
   monthly: { pill: 'Une fois par mois', items: [
-    "Tester l'alcalinité / TAC",
+    'Tester le TAC (alcalinité)',
     'Tester le stabilisant (CYA)',
     'Vérifier le TH / calcaire',
     'Nettoyage profond de la ligne d\'eau',
@@ -3045,7 +2833,6 @@ function renderRoutines() {
 function toggleRoutine(idx) {
   state.routines[currentPeriod][idx] = !state.routines[currentPeriod][idx];
   saveKey(KEYS.routines, { routines: state.routines, resets: state.routinesReset });
-  pushRealtimeState();
   renderRoutines();
 }
 
@@ -3241,6 +3028,7 @@ function renderMeteo(data) {
 }
 
 function getFiltrationRecommendation(t) {
+  if (t >= 30) return 'filtration 18 h+';
   if (t >= 28) return 'filtration 24/24';
   if (t >= 26) return 'filtration 14 h';
   if (t >= 24) return 'filtration 12 h';
@@ -3338,8 +3126,6 @@ function buildICS() {
   const events = [];
   const now = new Date();
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const rem = Object.assign({ enabled:true, frequency:'2days', day:6, time:'09:00' }, loadKey(KEYS.reminders, {}));
-  const remTime = (rem.time || '09:00').split(':').map(Number);
 
   for (let w = 0; w < 26; w++) {
     const weekStart = new Date(start);
@@ -3350,13 +3136,6 @@ function buildICS() {
       const month = day.getMonth();
       const dow = day.getDay();
       const isSummer = month >= 4 && month <= 8;
-      const daysSinceEpoch = Math.floor(day.getTime() / 86400000);
-      const customMatch = rem.frequency === '2days' ? daysSinceEpoch % 2 === 0 : rem.frequency === 'monthly' ? day.getDate() <= 7 && dow === Number(rem.day) : dow === Number(rem.day);
-      if (rem.enabled !== false && customMatch && isSummer) {
-        const dt = new Date(day); dt.setHours(remTime[0] || 9, remTime[1] || 0, 0, 0);
-        const dtEnd = new Date(dt); dtEnd.setMinutes(dtEnd.getMinutes() + 20);
-        events.push({ start: dt, end: dtEnd, title: '🏊 Rappel entretien piscine', desc: 'Contrôle eau, filtration, ligne d\'eau et journal des actions.' });
-      }
 
       if (dow === 6 && isSummer) {
         const dt = new Date(day); dt.setHours(9, 0, 0, 0);
@@ -3375,7 +3154,7 @@ function buildICS() {
     while (monthStart.getDay() !== 6) monthStart.setDate(monthStart.getDate() + 1);
     monthStart.setHours(10, 0, 0, 0);
     const end = new Date(monthStart); end.setMinutes(30);
-    events.push({ start: monthStart, end, title: '🧪 Tests mensuels piscine', desc: 'Tester alcalinité/TAC, CYA, TH. Nettoyage profond.' });
+    events.push({ start: monthStart, end, title: '🧪 Tests mensuels piscine', desc: 'Tester TAC, CYA, TH. Nettoyage profond.' });
   }
 
   const dtstamp = icsDate(new Date());
@@ -3402,6 +3181,134 @@ function exportICS() {
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 100);
   showToast('Calendrier téléchargé ✓');
+}
+
+
+// SHARED POOL
+let pendingSharedPool = null;
+
+function getShareBaseUrl() {
+  return window.location.href.split('#')[0].split('?')[0];
+}
+
+function encodeSharePayload(payload) {
+  const json = JSON.stringify(payload);
+  return btoa(unescape(encodeURIComponent(json)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '');
+}
+
+function decodeSharePayload(str) {
+  const safe = str.replace(/-/g, '+').replace(/_/g, '/');
+  const padded = safe + '='.repeat((4 - safe.length % 4) % 4);
+  return JSON.parse(decodeURIComponent(escape(atob(padded))));
+}
+
+function buildSharePayload() {
+  if (!state.config) return null;
+  return {
+    type: 'piscine-share',
+    version: 1,
+    sharedAt: Date.now(),
+    config: state.config,
+    measures: state.measures || [],
+    routines: state.routines || { daily: {}, weekly: {}, monthly: {} },
+    routinesReset: state.routinesReset || { daily: 0, weekly: 0, monthly: 0 },
+    lastTemp: loadKey(KEYS.lastTemp, null)
+  };
+}
+
+function buildShareLink() {
+  const payload = buildSharePayload();
+  if (!payload) return '';
+  return getShareBaseUrl() + '#share=' + encodeSharePayload(payload);
+}
+
+function buildShareMessage() {
+  const poolName = state.config && state.config.name ? state.config.name : 'la piscine de la maison';
+  return 'Je te partage la gestion de ' + poolName + ' 🏡💧\n\nOuvre ce lien pour récupérer la configuration, les mesures et les routines :\n' + buildShareLink();
+}
+
+async function copyShareLink() {
+  const link = buildShareLink();
+  if (!link) { showToast('Configure d’abord la piscine', true); return; }
+  try {
+    await navigator.clipboard.writeText(link);
+    showToast('Lien copié ✓');
+  } catch(e) {
+    showToast('Copie impossible', true);
+  }
+}
+
+async function sharePoolBySms() {
+  if (!state.config) { showToast('Configure d’abord la piscine', true); return; }
+  const message = buildShareMessage();
+  const shareData = { title: 'Gestion piscine', text: message };
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      return;
+    } catch(e) {
+      // Si l'utilisateur ferme le partage natif, on propose le SMS en fallback.
+    }
+  }
+  const smsUrl = 'sms:?&body=' + encodeURIComponent(message);
+  window.location.href = smsUrl;
+  setTimeout(() => showToast('SMS prêt à envoyer'), 500);
+}
+
+function detectSharedPoolInUrl() {
+  const hash = window.location.hash || '';
+  if (!hash.startsWith('#share=')) return false;
+  try {
+    const payload = decodeSharePayload(hash.slice(7));
+    if (!payload || payload.type !== 'piscine-share' || !payload.config) throw new Error('Invalid payload');
+    pendingSharedPool = payload;
+    const poolName = payload.config.name || 'cette piscine';
+    const volume = payload.config.volume ? ' · ' + payload.config.volume + ' m³' : '';
+    const city = payload.config.location && payload.config.location.name ? ' · ' + payload.config.location.name : '';
+    const sub = document.getElementById('shareImportSub');
+    if (sub) sub.textContent = 'Tu as reçu une invitation pour gérer « ' + poolName + ' »' + volume + city + '.';
+    const modal = document.getElementById('shareImportModal');
+    if (modal) modal.classList.add('show');
+    return true;
+  } catch(e) {
+    history.replaceState(null, '', getShareBaseUrl());
+    showToast('Lien de partage invalide', true);
+    return false;
+  }
+}
+
+function closeShareImportModal() {
+  pendingSharedPool = null;
+  const modal = document.getElementById('shareImportModal');
+  if (modal) modal.classList.remove('show');
+  history.replaceState(null, '', getShareBaseUrl());
+}
+
+function confirmSharedPoolImport() {
+  if (!pendingSharedPool) return;
+  state.config = pendingSharedPool.config;
+  state.measures = Array.isArray(pendingSharedPool.measures) ? pendingSharedPool.measures : [];
+  state.routines = pendingSharedPool.routines || { daily: {}, weekly: {}, monthly: {} };
+  state.routinesReset = pendingSharedPool.routinesReset || { daily: 0, weekly: 0, monthly: 0 };
+
+  saveKey(KEYS.config, state.config);
+  saveKey(KEYS.measures, state.measures);
+  saveKey(KEYS.routines, { routines: state.routines, resets: state.routinesReset });
+  if (pendingSharedPool.lastTemp != null) saveKey(KEYS.lastTemp, pendingSharedPool.lastTemp);
+
+  localStorage.removeItem(KEYS.meteoCache);
+  history.replaceState(null, '', getShareBaseUrl());
+  document.getElementById('shareImportModal').classList.remove('show');
+  document.getElementById('onboarding').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  document.getElementById('appNav').style.display = 'flex';
+  initAppUI();
+  switchTab('dash');
+  showToast('Piscine importée ✓');
+  pendingSharedPool = null;
 }
 
 // PDF
@@ -3439,7 +3346,7 @@ function exportPDF() {
     const stats = [
       { lbl: 'pH', val: last.ph != null ? last.ph.toFixed(1) : '—', unit: '', range: '7,2 - 7,4', status: phStatus(last.ph) },
       { lbl: 'Chlore libre', val: last.cl != null ? last.cl.toFixed(1) : '—', unit: 'mg/L', range: '1 - 3 mg/L', status: clStatus(last.cl) },
-      { lbl: 'Alcalinité', val: last.tac != null ? Math.round(last.tac) : '—', unit: 'ppm', range: '80 - 120 ppm', status: tacStatus(last.tac) },
+      { lbl: 'TAC', val: last.tac != null ? Math.round(last.tac) : '—', unit: 'mg/L', range: '80 - 120 mg/L', status: tacStatus(last.tac) },
       { lbl: 'Stabilisant', val: last.cya != null ? Math.round(last.cya) : '—', unit: 'mg/L', range: '30 - 50 mg/L', status: cyaStatus(last.cya) }
     ];
     const colW = W / 2 - 3;
@@ -3469,25 +3376,6 @@ function exportPDF() {
   }
   y += 4;
 
-  const todayStart = new Date(); todayStart.setHours(0,0,0,0);
-  const todayMeasures = state.measures.filter(m => m.ts >= todayStart.getTime());
-  const todayActions = state.actions.filter(a => a.ts >= todayStart.getTime());
-  const dayAdvice = last ? buildDiagnostic(last).filter(a => a.status !== 'good') : [];
-  if (y > 220) { doc.addPage(); y = M; }
-  doc.setTextColor.apply(doc, C_INK); doc.setFontSize(14); doc.setFont('helvetica', 'bold');
-  doc.text('Récap du jour', M, y); y += 7;
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor.apply(doc, C_DIM);
-  doc.text(todayMeasures.length + ' mesure(s) aujourd\'hui · ' + todayActions.length + ' action(s) réalisée(s)', M, y); y += 7;
-  doc.setFontSize(9); doc.setTextColor.apply(doc, C_INK);
-  if (todayActions.length) {
-    todayActions.slice(0, 8).forEach(a => { if (y > 275) { doc.addPage(); y = M; } const lines = doc.splitTextToSize('• ' + a.type + ' — ' + a.text + ' (' + a.author + ')', W); doc.text(lines, M, y); y += lines.length * 4.5; });
-  } else { doc.text('• Aucune action consignée aujourd\'hui.', M, y); y += 5; }
-  if (dayAdvice.length) {
-    y += 3; doc.setFont('helvetica', 'bold'); doc.text('Actions et conseils à réaliser', M, y); y += 5; doc.setFont('helvetica', 'normal');
-    dayAdvice.slice(0, 6).forEach(a => { if (y > 275) { doc.addPage(); y = M; } const lines = doc.splitTextToSize('• ' + a.title + ' : ' + a.body.replace(/<[^>]+>/g, ''), W); doc.text(lines, M, y); y += lines.length * 4.5; });
-  } else { doc.text('• Pas de conseil urgent détecté.', M, y); y += 5; }
-  y += 6;
-
   if (state.measures.length > 0) {
     if (y > 220) { doc.addPage(); y = M; }
     doc.setTextColor.apply(doc, C_INK); doc.setFontSize(14); doc.setFont('helvetica', 'bold');
@@ -3496,7 +3384,7 @@ function exportPDF() {
     doc.text(state.measures.length + (state.measures.length > 1 ? ' entrées' : ' entrée'), M, y); y += 6;
 
     const colsX = [M, M+30, M+50, M+72, M+92, M+114, M+136];
-    const headers = ['Date', 'pH', 'Cl', 'Alk.', 'CYA', 'TH', 'T° eau'];
+    const headers = ['Date', 'pH', 'Cl', 'TAC', 'CYA', 'TH', 'T° eau'];
     doc.setDrawColor.apply(doc, C_LINE); doc.setLineWidth(0.3);
     doc.line(M, y, M + W, y); y += 4;
     doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor.apply(doc, C_DEEP);
@@ -3582,282 +3470,6 @@ function exportPDF() {
 
   doc.save('piscine-rapport-' + today.toISOString().slice(0, 10) + '.pdf');
   showToast('PDF généré ✓');
-}
-
-
-// ADVANCED FEATURES: actions, AI prototype, piscinier, reminders, realtime sync
-function getMemberName() {
-  return (state.sync && state.sync.memberName) || localStorage.getItem('piscine:memberName') || 'Membre';
-}
-function savePoolAction() {
-  const type = document.getElementById('actType').value;
-  const text = document.getElementById('actText').value.trim();
-  const author = document.getElementById('actAuthor').value.trim() || getMemberName();
-  const priority = document.getElementById('actPriority').value;
-  if (!text) { showToast('Décris l\'action réalisée', true); return; }
-  const action = { id: 'act_' + Date.now(), ts: Date.now(), type, text, author, priority };
-  state.actions.unshift(action);
-  state.actions = state.actions.slice(0, 150);
-  saveKey(KEYS.actions, state.actions);
-  document.getElementById('actText').value = '';
-  renderActions();
-  pushRealtimeState();
-  showToast('Action ajoutée ✓');
-}
-function renderActions() {
-  const count = document.getElementById('actionsCount');
-  const list = document.getElementById('actionsList');
-  if (!count || !list) return;
-  count.textContent = state.actions.length ? state.actions.length + (state.actions.length > 1 ? ' actions' : ' action') : 'aucune action';
-  if (!state.actions.length) {
-    list.innerHTML = '<div class="empty"><div class="empty-icon">📝</div>Aucune action enregistrée.</div>';
-    return;
-  }
-  const icon = { Traitement:'🧪', Nettoyage:'🧽', Filtration:'↻', Backwash:'💨', 'Analyse eau':'🔬', 'Achat produit':'🛒', Autre:'•' };
-  list.innerHTML = state.actions.slice(0, 40).map(a => {
-    const d = new Date(a.ts);
-    return '<div class="action-log-item">' +
-      '<div class="action-log-icon">' + (icon[a.type] || '•') + '</div>' +
-      '<div><div class="action-log-title">' + a.text + '</div><div class="action-log-meta">' + a.type + ' · ' + a.author + ' · ' + d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}) + '</div></div>' +
-      '<button class="del-btn" onclick="deletePoolAction(\'' + a.id + '\')">✕</button>' +
-    '</div>';
-  }).join('');
-}
-function deletePoolAction(id) {
-  state.actions = state.actions.filter(a => a.id !== id);
-  saveKey(KEYS.actions, state.actions);
-  renderActions();
-  pushRealtimeState();
-}
-function previewWaterPhoto(e) {
-  const file = e.target.files && e.target.files[0];
-  const img = document.getElementById('waterPhotoPreview');
-  if (!file || !img) return;
-  img.src = URL.createObjectURL(file);
-  img.style.display = 'block';
-}
-function runPhotoAIAnalysis() {
-  const fileInput = document.getElementById('waterPhoto');
-  if (!fileInput.files || !fileInput.files[0]) { showToast('Ajoute une photo', true); return; }
-  const last = state.measures[0] || {};
-  const advice = buildDiagnostic(last);
-  const needs = detectNeeds().slice(0, 4);
-  const blocks = [];
-  blocks.push({ param:'Analyse photo', status:'warn', value:'prototype', icon:'✨', title:'Diagnostic visuel à confirmer', body:'La photo a été prise en compte. Pour une analyse IA réelle, il faudra envoyer cette image à un modèle Vision via un backend sécurisé.', actions:[
-    { b:'→', t:'Comparer la couleur observée avec les mesures pH / chlore / alcalinité.' },
-    { b:'→', t:'Ajouter une mesure manuelle juste après la photo pour fiabiliser le diagnostic.' }
-  ]});
-  if (advice.length) blocks.push(...advice.slice(0, 3));
-  if (needs.length) blocks.push({ param:'Produits probables', status:'warn', value: String(needs.length), icon:'🛒', title:'Besoins d\'achat possibles', body:'L\'app a détecté des produits ou actions à prévoir.', actions: needs.map(n => ({ b:'→', t:n })) });
-  renderDiagnosticInto('iaResult', blocks, false);
-  const analysis = { id:'ia_' + Date.now(), ts: Date.now(), author:getMemberName(), title:'Analyse photo', needs, adviceCount: blocks.length };
-  state.aiAnalyses.unshift(analysis);
-  state.aiAnalyses = state.aiAnalyses.slice(0, 50);
-  saveKey(KEYS.aiAnalyses, state.aiAnalyses);
-  pushRealtimeState();
-}
-function renderDiagnosticInto(containerId, advice, persisted) {
-  const c = document.getElementById(containerId);
-  if (!c) return;
-  if (!advice || advice.length === 0) { c.innerHTML = ''; return; }
-  const counts = { good: 0, warn: 0, bad: 0 };
-  advice.forEach(a => counts[a.status]++);
-  let summaryText;
-  if (counts.bad > 0) summaryText = '<strong>' + counts.bad + '</strong> action urgente' + (counts.bad > 1 ? 's' : '') + ' à mener';
-  else if (counts.warn > 0) summaryText = '<strong>' + counts.warn + '</strong> point' + (counts.warn > 1 ? 's' : '') + ' à surveiller';
-  else summaryText = '<strong>Lecture rassurante</strong> — aucun signal critique.';
-  const persistedNote = persisted ? '<div style="text-align:center; color: var(--leaf); font-size: 12px; margin-top: 10px;">✓ Analyse enregistrée</div>' : '';
-  const cardsHTML = advice.map(a => {
-    const actionsHTML = a.actions ? '<div class="advice-actions">' + a.actions.map(act => '<div class="advice-action"><span class="bullet">' + act.b + '</span><span>' + act.t + '</span></div>').join('') + '</div>' : '';
-    return '<div class="advice-card ' + a.status + '">' +
-      '<div class="advice-head">' +
-        '<div class="advice-icon">' + a.icon + '</div>' +
-        '<div class="advice-title"><span class="param">' + a.param + '</span>' + a.title + '</div>' +
-        '<div class="advice-value">' + a.value + '</div>' +
-      '</div>' +
-      '<div class="advice-body">' + a.body + '</div>' + actionsHTML +
-    '</div>';
-  }).join('');
-  c.innerHTML = '<div class="card"><div class="card-title">Diagnostic IA</div><div class="card-sub">photo + dernières mesures</div><div class="advice-summary">' + summaryText + '</div>' + cardsHTML + persistedNote + '</div>';
-  setTimeout(() => c.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
-}
-function detectNeeds() {
-  const last = state.measures[0] || {};
-  const needs = [];
-  if (last.ph != null && last.ph < 7.2) needs.push('pH+ / correcteur pH plus');
-  if (last.ph != null && last.ph > 7.4) needs.push('pH- / correcteur pH moins');
-  if (last.cl != null && last.cl < 1) needs.push('Chlore lent ou chlore choc');
-  if (last.cl != null && last.cl > 3) needs.push('Bandelettes / test chlore pour suivi rapproché');
-  if (last.tac != null && last.tac < 80) needs.push('TAC+ / rehausseur d\'alcalinité');
-  if (last.tac != null && last.tac > 120) needs.push('Conseil piscinier pour baisse alcalinité');
-  if (last.cya != null && last.cya > 60) needs.push('Conseil renouvellement d\'eau / stabilisant élevé');
-  if (last.th != null && last.th > 25) needs.push('Anti-calcaire piscine');
-  if (last.temp != null && last.temp >= 28) needs.push('Contrôle chlore renforcé + filtration 24/24');
-  if (!needs.length) needs.push('Bandelettes d\'analyse piscine', 'Chlore lent', 'Nettoyant ligne d\'eau');
-  return needs;
-}
-function renderPiscinier() {
-  const needsEl = document.getElementById('poolNeeds');
-  const storesEl = document.getElementById('storeSuggestions');
-  if (!needsEl || !storesEl) return;
-  const needs = detectNeeds();
-  needsEl.innerHTML = '<div class="need-tags">' + needs.map(n => '<span class="need-tag">' + n + '</span>').join('') + '</div>';
-  const city = state.config && state.config.location ? state.config.location.name : 'près de moi';
-  const mainNeed = needs[0] || 'produits piscine';
-  const searches = [
-    { title:'Fournitures piscine autour de ' + city, q:'magasin piscine fournitures ' + city + ' ' + mainNeed },
-    { title:'Pisciniste conseil traitement eau', q:'pisciniste traitement eau piscine ' + city },
-    { title:'Produits à acheter : ' + mainNeed, q:mainNeed + ' piscine ' + city }
-  ];
-  storesEl.innerHTML = searches.map(s => {
-    const url = 'https://www.google.com/maps/search/' + encodeURIComponent(s.q);
-    return '<div class="store-card"><div class="store-title">' + s.title + '</div><div class="store-sub">Recherche adaptée aux besoins détectés : ' + needs.slice(0,3).join(', ') + '.</div><a href="' + url + '" target="_blank" rel="noopener">Ouvrir dans Google Maps →</a></div>';
-  }).join('');
-}
-function hydrateAdvancedSettings() {
-  state.sync = loadKey(KEYS.sync, state.sync || {});
-  state.reminders = Object.assign({ enabled:false, frequency:'2days', day:6, time:'09:00' }, loadKey(KEYS.reminders, {}));
-  const set = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
-  set('memberName', state.sync && state.sync.memberName);
-  set('syncPoolId', state.sync && state.sync.poolId);
-  set('memberRole', state.sync && state.sync.role);
-  set('syncUrl', state.sync && state.sync.url);
-  set('syncKey', state.sync && state.sync.key);
-  set('remFreq', state.reminders.frequency);
-  set('remDay', String(state.reminders.day));
-  set('remTime', state.reminders.time);
-  set('remEnabled', String(!!state.reminders.enabled));
-  set('actAuthor', getMemberName());
-}
-function saveReminderSettings() {
-  state.reminders = {
-    enabled: document.getElementById('remEnabled').value === 'true',
-    frequency: document.getElementById('remFreq').value,
-    day: parseInt(document.getElementById('remDay').value, 10),
-    time: document.getElementById('remTime').value || '09:00'
-  };
-  saveKey(KEYS.reminders, state.reminders);
-  saveKey(KEYS.notifEnabled, state.reminders.enabled);
-  if (state.reminders.enabled && 'Notification' in window && Notification.permission !== 'granted') {
-    Notification.requestPermission().then(() => scheduleNotifications());
-  } else scheduleNotifications();
-  showToast('Rappels enregistrés ✓');
-}
-function saveSyncSettings() {
-  state.sync = {
-    memberName: document.getElementById('memberName').value.trim() || 'Membre',
-    poolId: document.getElementById('syncPoolId').value.trim() || slugify(state.config.name),
-    role: document.getElementById('memberRole').value,
-    url: document.getElementById('syncUrl').value.trim(),
-    key: document.getElementById('syncKey').value.trim(),
-    enabled: true
-  };
-  saveKey(KEYS.sync, state.sync);
-  localStorage.setItem('piscine:memberName', state.sync.memberName);
-  hydrateAdvancedSettings();
-  updateSyncStatus();
-  startRealtimeSync(true);
-  pushRealtimeState();
-  showToast('Accès partagé enregistré ✓');
-}
-function slugify(str) { return (str || 'piscine').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40) || 'piscine'; }
-function getFullStatePayload() {
-  return { config: state.config, measures: state.measures, routines: state.routines, routinesReset: state.routinesReset, actions: state.actions, aiAnalyses: state.aiAnalyses, reminders: state.reminders, updatedAt: Date.now() };
-}
-function applySharedPayload(data) {
-  if (!data) return;
-  if (data.config) { state.config = data.config; saveKey(KEYS.config, state.config); }
-  if (Array.isArray(data.measures)) { state.measures = data.measures; saveKey(KEYS.measures, state.measures); }
-  if (data.routines) { state.routines = data.routines; state.routinesReset = data.routinesReset || state.routinesReset; saveKey(KEYS.routines, { routines: state.routines, resets: state.routinesReset }); }
-  if (Array.isArray(data.actions)) { state.actions = data.actions; saveKey(KEYS.actions, state.actions); }
-  if (Array.isArray(data.aiAnalyses)) { state.aiAnalyses = data.aiAnalyses; saveKey(KEYS.aiAnalyses, state.aiAnalyses); }
-  if (data.reminders) { state.reminders = data.reminders; saveKey(KEYS.reminders, state.reminders); }
-  if (state.config) initAppUI();
-}
-function importSharedStateFromUrl() {
-  try {
-    const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
-    const poolId = hash.get('pool');
-    const url = hash.get('syncUrl');
-    const key = hash.get('syncKey');
-    if (poolId) {
-      const existing = loadKey(KEYS.sync, {});
-      saveKey(KEYS.sync, Object.assign(existing || {}, { poolId, url: url || existing.url, key: key || existing.key, enabled:true }));
-    }
-    const data = hash.get('data');
-    if (data) {
-      const payload = JSON.parse(decodeURIComponent(atob(data)));
-      applySharedPayload(payload);
-      history.replaceState(null, '', location.pathname + location.search);
-    }
-  } catch(e) { console.warn('import shared failed', e); }
-}
-function sharePoolInvite() {
-  const sync = state.sync || loadKey(KEYS.sync, {});
-  const poolId = (sync && sync.poolId) || slugify(state.config.name);
-  const params = new URLSearchParams();
-  params.set('pool', poolId);
-  if (sync && sync.url) params.set('syncUrl', sync.url);
-  if (sync && sync.key) params.set('syncKey', sync.key);
-  let link = location.origin + location.pathname + '#' + params.toString();
-  if (!sync || !sync.url || !sync.key) {
-    const encoded = btoa(encodeURIComponent(JSON.stringify(getFullStatePayload())));
-    link = location.origin + location.pathname + '#data=' + encoded;
-  }
-  const msg = 'Je te partage la gestion de la piscine "' + state.config.name + '". Ouvre ce lien dans l’app : ' + link;
-  if (navigator.share) navigator.share({ title:'Partager ma piscine', text:msg, url:link }).catch(()=>{});
-  else location.href = 'sms:?&body=' + encodeURIComponent(msg);
-  navigator.clipboard && navigator.clipboard.writeText(link).catch(()=>{});
-  showToast('Lien d\'invitation prêt ✓');
-}
-let syncTimer = null;
-function updateSyncStatus(text, on) {
-  const el = document.getElementById('syncStatus');
-  if (!el) return;
-  const sync = state.sync || loadKey(KEYS.sync, {});
-  const active = !!(sync && sync.enabled && sync.poolId && sync.url && sync.key);
-  el.classList.toggle('on', on == null ? active : on);
-  el.querySelector('span:last-child').textContent = text || (active ? 'Synchronisation temps réel active' : 'Synchronisation inactive');
-}
-async function startRealtimeSync(force) {
-  if (syncTimer) clearInterval(syncTimer);
-  const sync = state.sync || loadKey(KEYS.sync, {});
-  if (!sync || !sync.poolId || !sync.url || !sync.key) { updateSyncStatus(); return; }
-  if (force) await pullRealtimeState();
-  syncTimer = setInterval(pullRealtimeState, 5000);
-  updateSyncStatus('Synchronisation temps réel active', true);
-}
-async function supabaseFetch(method, body) {
-  const sync = state.sync || loadKey(KEYS.sync, {});
-  if (!sync || !sync.url || !sync.key || !sync.poolId) throw new Error('Sync non configurée');
-  const base = sync.url.replace(/\/$/, '') + '/rest/v1/pool_states';
-  const url = method === 'GET' ? base + '?id=eq.' + encodeURIComponent(sync.poolId) + '&select=id,data,updated_at' : base;
-  return fetch(url, {
-    method,
-    headers: { 'apikey': sync.key, 'Authorization':'Bearer ' + sync.key, 'Content-Type':'application/json', 'Prefer':'resolution=merge-duplicates,return=minimal' },
-    body: body ? JSON.stringify(body) : undefined
-  });
-}
-async function pushRealtimeState() {
-  const sync = state.sync || loadKey(KEYS.sync, {});
-  if (!sync || !sync.poolId || !sync.url || !sync.key) return;
-  try {
-    await supabaseFetch('POST', { id: sync.poolId, data: getFullStatePayload(), updated_at: new Date().toISOString() });
-    updateSyncStatus('Dernière synchro : ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}), true);
-  } catch(e) { updateSyncStatus('Erreur sync : vérifie Supabase', false); }
-}
-async function pullRealtimeState() {
-  const sync = state.sync || loadKey(KEYS.sync, {});
-  if (!sync || !sync.poolId || !sync.url || !sync.key) return;
-  try {
-    const res = await supabaseFetch('GET');
-    const rows = await res.json();
-    if (rows && rows[0] && rows[0].data && (!state._lastRemote || rows[0].data.updatedAt > state._lastRemote)) {
-      state._lastRemote = rows[0].data.updatedAt;
-      applySharedPayload(rows[0].data);
-      updateSyncStatus('Données partagées à jour', true);
-    }
-  } catch(e) { updateSyncStatus('Erreur lecture temps réel', false); }
 }
 
 // TOAST
@@ -3946,19 +3558,16 @@ window.addEventListener('resize', positionSegmentIndicator);
 
 // BOOT
 function boot() {
-  importSharedStateFromUrl();
+  const hasSharedPool = detectSharedPoolInUrl();
   state.measures = loadKey(KEYS.measures, []);
   const r = loadKey(KEYS.routines, null);
   if (r) { state.routines = r.routines || state.routines; state.routinesReset = r.resets || state.routinesReset; }
   state.config = loadKey(KEYS.config, null);
-  state.actions = loadKey(KEYS.actions, []);
-  state.aiAnalyses = loadKey(KEYS.aiAnalyses, []);
-  state.sync = loadKey(KEYS.sync, null);
-  state.reminders = Object.assign(state.reminders || {}, loadKey(KEYS.reminders, {}));
 
   if (!state.config) {
     setupOnbListeners();
     setOnbStep(0);
+    if (hasSharedPool) document.getElementById('onboarding').style.display = 'none';
   } else {
     document.getElementById('onboarding').style.display = 'none';
     document.getElementById('mainApp').style.display = 'block';
